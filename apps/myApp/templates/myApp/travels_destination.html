@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Destination</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'myApp/css/stylesheet.css' %}"media="screen" title="no title"  charset="utf-8">
+    </head>
+
+    <body>
+      <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Travel Dashboard</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'myApp:travels' %}">Home</a></li>
+                <li><a href="{% url 'myApp:logout' %}">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      <div class="wrapper row">
+        {% if messages %}
+            {% for message in messages %}
+                <div class='alert alert-{{message.tags}}'>{{message}}</div>
+            {% endfor %}
+        {% endif %}
+
+        <h2>{{trip.destination}}</h2>
+        <br/>
+        Planned by: {{trip.user.name}}
+        <br/>
+        Description: {{trip.description}}
+        <br/>
+        Travel Date From: {{trip.from_date|date:"M d, Y"}}
+        <br/>
+        Travel Date To: {{trip.to_date|date:"M d, Y"}}
+        <br/>
+        <br/>
+
+        {% if otherUsers %}
+
+            <h3>Other users' joining the trip</h3>
+            {% for user in otherUsers %}
+                <div>{{user.name}}</div>
+            {% endfor %}
+
+        {% endif %}
+
+      </div>
+    </body>
+</html>

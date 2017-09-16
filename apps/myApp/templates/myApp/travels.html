@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Travel Dashboard</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'myApp/css/stylesheet.css' %}"media="screen" title="no title"  charset="utf-8">
+    </head>
+    <body>
+      <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Travel Dashboard</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'myApp:logout' %}">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      <div class="wrapper row">
+        {% if messages %}
+            {% for message in messages %}
+                <div class='alert alert-{{message.tags}}'>{{message}}</div>
+            {% endfor %}
+        {% endif %}
+
+        <h3>Your Trip Schedules</h3>
+        <table class="table table-bordered">
+          <thead>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+          </thead>
+
+          <tbody>
+          {% for trip in myTrips %}
+            <tr class="active">
+              <td class="active"><a href="{% url 'myApp:travels_destination' id=trip.id %}">{{trip.destination}}</a></td>
+              <td class="active">{{trip.from_date|date:"M d, Y"}}</td>
+              <td class="active">{{trip.to_date|date:"M d, Y"}}</td>
+              <td class="active">{{trip.description}}</td>
+
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+        <h3>Other User's Travel Plans</h3>
+        <table class="table table-bordered">
+        <thead>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Plan</th>
+          <th>Do you want to join?</th>
+        </thead>
+
+        <tbody>
+        {% for trip in otherTrips %}
+          <tr class="active">
+            <td class="active">{{trip.user.name}}</td>
+            <td class="active"><a href="{% url 'myApp:travels_destination' id=trip.id %}">{{trip.destination}}</a></td>
+            <td class="active">{{trip.from_date|date:"M d, Y"}}</td>
+            <td class="active">{{trip.to_date|date:"M d, Y"}}</td>
+            <td class="active">{{trip.description}}</td>
+            <td class="active"><a href="{% url 'myApp:trip_join' id=trip.id %}">Join</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        <a class="pull-right" href="{% url 'myApp:travels_add' %}">Add Travel Plan</a>
+      </div>
+    </body>
+</html>
