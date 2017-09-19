@@ -1,6 +1,10 @@
 # Django Sample App
 
 Description:
+This is an application that allows the logged user to add his travel plans and be able to join other users travel plans.
+This includes normal authentication with server side validations. Once logged in a user can see travel plans that have either been created or joined by the user. A user has the ability to join other users' travel plans and newly added travel plan should appear on logged user's trip schedule table. (Note this was deployed to an EC2 instance).
+
+![Example Image](https://s3.us-east-2.amazonaws.com/qadamo-images/travelbuddy.png "Example Image")
 
 The current `requirements.txt` file includes:
 
